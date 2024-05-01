@@ -1,10 +1,15 @@
 import { useState } from "react";
-import { Word } from "../../model";
 import '../../styles.css';
 
-export const AutoComplete = ({ words }: Word) => {
+export interface AutoCompleteProps{
+  words: string[];
+  onChange: (text: string) => void;
+  value: string;
+}
+
+export const AutoComplete = ({ words, onChange, value }: AutoCompleteProps) => {
   const [searchWord, setSearchWord] = useState<string[]>([]);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(value);
 
   // Function to filter words based on the current query
   const lookWord = async (word: string) => {
@@ -20,6 +25,7 @@ export const AutoComplete = ({ words }: Word) => {
       );
       resolve(filteredWords);
       setQuery(text);
+      onChange(text);
     });
   };
 
@@ -37,12 +43,16 @@ export const AutoComplete = ({ words }: Word) => {
       <input
         type="text"
         placeholder="Auto-complete"
+        value={query}
         onChange={(e) => lookWord(e.target.value)}
       />
 
       <div className="word-list">
         {searchWord.length
-          ? searchWord.map((word: string, index) => <div className= "word-item" key={index}>
+          ? searchWord.map((word: string, index) => <div className= "word-item" key={index}  onClick={() => {
+            setQuery(word);
+            onChange(word);
+          }}>
              <div dangerouslySetInnerHTML={{ __html: hilightMatchingText(word) }}/>
           </div>)
            : words.map((word: string, index) => <div className= "word-item" key={index} >{word}</div>

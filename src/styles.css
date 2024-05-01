@@ -1,0 +1,26 @@
+.container {
+    width: 300px;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .word-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .word-item {
+    padding: 8px;
+    margin-bottom: 4px;
+    background-color: #f4f4f4;
+    border-radius: 4px;
+  }
+  
+  .word-item:hover {
+    background-color: #e0e0e0;
+  }
